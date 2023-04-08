@@ -1,0 +1,108 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Parking lot APIs",
+    "version": "1.0.0",
+    "description": ""
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/getSlot/{parkingLotId}/{size}": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "parkingLotId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Id of parking lot"
+          },
+          {
+            "name": "size",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Size of the parking you want to book ie small, medium, large and xLarge"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User successfully obtained.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                },
+                "info": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number",
+                      "example": 123
+                    },
+                    "parkingLotId": {
+                      "type": "number",
+                      "example": 123
+                    },
+                    "parkingSize": {
+                      "type": "string",
+                      "example": "small"
+                    },
+                    "parkingLocation": {
+                      "type": "string",
+                      "example": "floor:slot"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/releaseSlot/{parkingLotId}/{slotId}": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "parkingLotId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Id of parking lot"
+          },
+          {
+            "name": "slotId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Slot id you want to deallocate"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "202": {
+            "description": "Accepted"
+          }
+        }
+      }
+    }
+  }
+}
