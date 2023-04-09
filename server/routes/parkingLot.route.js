@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { getSlot, releaseSlot } from '../service/parkingLot.service.js';
+import logger from '../logger/logger.js';
 
 const routes = Router();
 
@@ -22,6 +23,7 @@ routes.post('/getSlot/:parkingLotId/:size', async (req, res) => {
       }
   } */
   const { parkingLotId, size } = req.params;
+  logger.debug('/getSlot API triggered with parkingLotId %s and size %s', parkingLotId, size);
   res.send(await getSlot(parkingLotId, size));
 });
 
@@ -30,6 +32,7 @@ routes.post('/releaseSlot/:parkingLotId/:slotId', async (req, res) => {
   // #swagger.parameters['slotId'] = { in: 'path', description: 'Slot id you want to deallocate' }
   // #swagger.responses[202]: { description: 'Parking slot updated successfully' }
   const { parkingLotId, slotId } = req.params;
+  logger.debug('/releaseSlot API triggered with parkingLotId %s and slotId %s', parkingLotId, slotId);
   res.send(await releaseSlot(parkingLotId, slotId));
 });
 

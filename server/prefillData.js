@@ -1,7 +1,10 @@
 import postgres from 'postgres';
+import config from './config/config.js';
+
+const { username, password, host, port, databaseName } = config.database;
 
 const checkAndCreateDatabase = async () => {
-  const sql = postgres('postgres://postgres:1234@localhost');
+  const sql = postgres(`postgres://${username}:${password}@${host}:${port}`);
   const databases = await sql`
     SELECT datname FROM pg_database;
   `;
@@ -110,8 +113,8 @@ const autofillTable = async (sql) => {
     }
     try {
       await sql.begin(sql => [
-        sql`INSERT INTO parking_lot  ${ sql(sql_parking, 'id', 'parking_name') }`,
-        sql`INSERT INTO parking_details  ${ sql(sql_parking_details, 'parking_lot_id', 'parking_location', 'parking_size') }`,
+        sql`INSERT INTO parking_lot  ${sql(sql_parking, 'id', 'parking_name')}`,
+        sql`INSERT INTO parking_details  ${sql(sql_parking_details, 'parking_lot_id', 'parking_location', 'parking_size')}`,
       ]);
     } catch (error) {
       console.log('Error while filling the data %o', error);
@@ -121,7 +124,7 @@ const autofillTable = async (sql) => {
 
 (async () => {
   await checkAndCreateDatabase();
-  const sql = postgres('postgres://postgres:1234@localhost/parking');
+  const sql = postgres(`postgres://${username}:${password}@${host}:${port}/${databaseName}`);
   await createTableIfNotExist(sql);
   await autofillTable(sql);
   sql.CLOSE;
