@@ -70,13 +70,13 @@ const autofillTable = async (sql) => {
   if (res[0].count === '0') {
     let sql_parking = [];
     let sql_parking_details = [];
-    for (let i = 1; i <= 10; i += 1) {
+    for (let i = 1; i <= 2; i += 1) {
       sql_parking.push({
         id: i,
         parking_name: `parking_name_${i}`
       });
       let counter = 0;
-      for (let j = 1; j <= 100; j += 1) {
+      for (let j = 1; j <= 10; j += 1) {
         const small = {
           parking_lot_id: i,
           parking_location: `0:${++counter}`,

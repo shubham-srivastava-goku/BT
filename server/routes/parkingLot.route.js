@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getSlot, releaseSlot } from '../service/parkingLot.service.js';
+import { getSlot, releaseSlot, getParkingLots } from '../service/parkingLot.service.js';
 import logger from '../logger/logger.js';
 
 const routes = Router();
@@ -34,6 +34,11 @@ routes.post('/releaseSlot/:parkingLotId/:slotId', async (req, res) => {
   const { parkingLotId, slotId } = req.params;
   logger.debug('/releaseSlot API triggered with parkingLotId %s and slotId %s', parkingLotId, slotId);
   res.send(await releaseSlot(parkingLotId, slotId));
+});
+
+routes.get('/parkingLots', async(req, res) => {
+  logger.debug('/parkingLots API triggered.');
+  res.send(await getParkingLots());
 });
 
 export default routes;

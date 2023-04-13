@@ -74,3 +74,8 @@ export const releaseSlot = async (parkingId, slotId) => {
     return { success: false, error: error.message };
   }
 }
+
+export const getParkingLots = async () => {
+  const res = await sql `select id, parking_name as "parkingName" from parking_lot order by id`;
+  return res;
+}

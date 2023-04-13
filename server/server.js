@@ -5,6 +5,7 @@ import { cpus } from 'os';
 import { readFileSync } from 'fs';
 import process from 'process';
 import cluster from 'cluster';
+import cors from 'cors';
 import router from './routes/parkingLot.route.js';
 import logger from './logger/logger.js';
 
@@ -16,9 +17,9 @@ const startServer = () => {
   logger.debug('Starting server');
   const app = Express();
   const server = http.createServer(app);
-
+  app.use(cors());
   app.use('/', router);
-  app.use('/doc', swaggerUi.serve, swaggerUi.setup(readSwaggerFile()))
+  app.use('/doc', swaggerUi.serve, swaggerUi.setup(readSwaggerFile()));
   server.listen(8080, () => {
     logger.log('info', 'Server started on port %s', '8080');
   });
